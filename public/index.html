@@ -359,7 +359,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-  <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAA6UMLegQg4ybqJwNHbovf76iokNsF_ns&sensor=false&libraries=places'></script>
+  <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAA6UMLegQg4ybqJwNHbovf76iokNsF_ns&libraries=places'></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-socket-io/socket.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
@@ -375,16 +375,16 @@
   <div id="container">
     <div id="inner">
       <div class="slide">
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('dentist')">Dentist</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('doctor')">Doctor</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('hospital')">Hospital</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('insurance_agency')">Insurance</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('drug store')">Drug Store</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('ambulance')">Ambulance</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('gym')">Gym</md-button>
-        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('spa')">Spa</md-button>
-        <md-button class="md-primary md-raised" ng-click="getLocationByKeyword('sport center')">Sport Center</md-button>
-        <md-button class="md-primary md-raised" ng-click="getLocationByKeyword('swimming pool')">Swimming Pool</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('dentist')">Dentist</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('doctor')">Doctor</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('hospital')">Hospital</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('insurance_agency')">Insurance</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('drug store')">Drug Store</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('ambulance')">Ambulance</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('gym')">Gym</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('spa')">Spa</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" ng-click="getLocationByKeyword('sport center')">Sport Center</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" ng-click="getLocationByKeyword('swimming pool')">Swimming Pool</md-button>
       </div> 
 
       <div class="slide">
@@ -394,16 +394,6 @@
           <md-slider flex ng-model="radius" min="0" max="2000" aria-label="blue" id="blue-slider" class="md-primary">
           </md-slider>
           {{radius}}
-        </md-slider-container>
-      </div>
-
-      <div class="slide">
-        <span class="md-body-1">Map Zoom</span>
-        <md-slider-container class="slider">
-          <span class="md-body-1"></span>
-          <md-slider flex ng-model="zoom" min="0" max="10" aria-label="blue" id="blue-slider" class="md-primary">
-          </md-slider>
-          {{zoom}}
         </md-slider-container>
       </div>
     </div>

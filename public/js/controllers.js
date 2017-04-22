@@ -48,6 +48,7 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.image_url = "https://img.clipartfest.com/1d90d3fe2dc112f65b18fc2eab23e468_-doctor-logo-clip-art-png-clipart-images-of-doctor_800-1314.png";
     $scope.radius = 500;
     $scope.zoom = 10;
+    $scope.clicked = false;
 
     //--------------------------------------------
 
@@ -55,6 +56,7 @@ angular.module('app.controllers', ['ngMaterial']).
     var map;
 
     $scope.sendSocket = function(message){
+         $scope.clicked = true;
          self.toggleActivation();
          $scope.loading = true;
          Service.getEntityWatson(message).success(function(result) {
@@ -76,6 +78,7 @@ angular.module('app.controllers', ['ngMaterial']).
 
 
     $scope.getLocation = function(criteria){
+        $scope.clicked = true;
         $scope.loading = true;
         self.toggleActivation();
         if(criteria == 'doctor'){
@@ -109,6 +112,7 @@ angular.module('app.controllers', ['ngMaterial']).
     
 
     $scope.getLocationByKeyword = function(keywords){
+      $scope.clicked = true;
       if($scope.loading == false){
         $scope.loading = true;
         self.toggleActivation();
@@ -270,6 +274,7 @@ angular.module('app.controllers', ['ngMaterial']).
         bounds.extend(place.geometry.location);
       }
       $scope.loading = false;
+      $scope.clicked = false;
       map.fitBounds(bounds);
       self.toggleActivation();
     }
