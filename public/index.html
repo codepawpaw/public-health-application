@@ -72,11 +72,12 @@
   }
   #container {
     overflow: hidden;
+    width: 100%;
   }
 
   #inner {
     overflow: hidden;
-    width: 2000px;
+    width: 100%;
   }
 
   .child {
@@ -85,13 +86,10 @@
     margin-left: 10px;
   }
 
-  /*.bounce {
-    position:fixed;
-    height:50px;
-    width:50px;
-    background:red;
-    -webkit-animation:bounce 1s infinite;
-  }*/
+  .slide {
+    float: left;
+    margin-left: 10px;
+  }
 
   @-webkit-keyframes bounce {
     0%       { bottom:5px; }
@@ -99,8 +97,6 @@
     50%      { bottom:20px; }
     100%     {bottom:0;}
   }
-
-
 
   .bounce {
     height:50px;
@@ -377,92 +373,113 @@
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   
 
-  <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('dentist')">Dentist</md-button>
-  <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('doctor')">Doctor</md-button>
-  <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('hospital')">Hospital</md-button>
-  <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('insurance_agency')">Insurance</md-button>
-  <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('drug store')">Drug Store</md-button>
-    
-      
+  <div id="container">
+    <div id="inner">
+      <div class="slide">
+        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('dentist')">Dentist</md-button>
+        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('doctor')">Doctor</md-button>
+        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('hospital')">Hospital</md-button>
+        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocation('insurance_agency')">Insurance</md-button>
+        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('drug store')">Drug Store</md-button>
+        <md-button class="md-primary md-raised" style="width:100px;" ng-click="getLocationByKeyword('ambulance')">Ambulance</md-button>
+      </div> 
+
+      <div class="slide">
+        <span class="md-body-1">Radius Location Searching</span>
+        <md-slider-container class="slider">
+          <span class="md-body-1"></span>
+          <md-slider flex ng-model="radius" min="0" max="2000" aria-label="blue" id="blue-slider" class="md-primary">
+          </md-slider>
+          <md-input-container>
+            <input flex type="number" ng-model="radius" aria-label="blue" aria-controls="blue-slider">
+          </md-input-container>
+        </md-slider-container>
+      </div>
+
+      <div class="slide">
+        <span class="md-body-1">Map Zoom</span>
+        <md-slider-container class="slider">
+          <span class="md-body-1"></span>
+          <md-slider flex ng-model="zoom" min="0" max="10" aria-label="blue" id="blue-slider" class="md-primary">
+          </md-slider>
+          <md-input-container>
+            <input flex type="number" ng-model="zoom" aria-label="blue" aria-controls="blue-slider">
+          </md-input-container>
+        </md-slider-container>
+      </div>
+    </div>
+  </div>
+
+  <div>
     <CENTER>
       <div id="container">
-        
-        <div id="inner">
-          <div>
-            <span class="md-body-1">Radius Location Searching</span>
-            <md-slider-container class="slider">
-              <span class="md-body-1"></span>
-              <md-slider flex ng-model="radius" min="0" max="2000" aria-label="blue" id="blue-slider" class="md-primary">
-              </md-slider>
-               <md-input-container>
-                <input flex type="number" ng-model="radius" aria-label="blue" aria-controls="blue-slider">
-               </md-input-container>
-            </md-slider-container>
-
-            <div ng-show="loading == true">
-            <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
+          
+          <div id="inner">
+            <div>
+              <div ng-show="loading == true">
+              <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
+              </div>
+              <div id="map" style="width:73%;height:100%;float: left;margin-left:10px;"></div>
             </div>
-            <div id="map" style="width:66%;height:100%;float: left;margin-left:10px;"></div>
-          </div>
 
-          <div class="child" class="md-primary md-raised">
-              <div class="bounce"></div>
-              <div class="chat">
-                <div class="chat-header clearfix">
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
-                  
-                  <div class="chat-about">
-                    <div class="chat-with">Chat with Doyok</div>
-                    <div class="chat-num-messages">Powered By IBM Watson</div>
-                    <div class="chat-num-messages">Active</div>
-                  </div>
-                  <i class="fa fa-star"></i>
-                </div> 
-                
-                <div class="chat-history">
-                  <ul class="ul-chat-history">
-                    <li class="clearfix">
-                      <div class="message-data align-right">
-                        <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-                        <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>
-                        
-                      </div>
-                      <div class="message other-message float-right">
-                        Hi, how are you? My Name is Doyok. 
-                        You can ask about the location of the health venue we did not provide on the menu.
-                        Like HIV Hospital, etc :)
-                      </div>
-                    </li>
-
-                    <li class="clearfix">
-                      <div class="message-data align-right">
-                        <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-                        <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>
-                        
-                      </div>
-                      <div class="message other-message float-right">
-                        You can tell me some word like 'Show me any cancer hospital' or you can say 
-                        'cancer hospital'
-                      </div>
-                    </li>
+            <div class="child" class="md-primary md-raised">
+                <div class="bounce"></div>
+                <div class="chat">
+                  <div class="chat-header clearfix">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
                     
-                  </ul>
+                    <div class="chat-about">
+                      <div class="chat-with">Chat with Doyok</div>
+                      <div class="chat-num-messages">Powered By IBM Watson</div>
+                      <div class="chat-num-messages">Active</div>
+                    </div>
+                    <i class="fa fa-star"></i>
+                  </div> 
+                  
+                  <div class="chat-history">
+                    <ul class="ul-chat-history">
+                      <li class="clearfix">
+                        <div class="message-data align-right">
+                          <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+                          <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>
+                          
+                        </div>
+                        <div class="message other-message float-right">
+                          Hi, how are you? My Name is Doyok. 
+                          You can ask about the location of the health venue we did not provide on the menu.
+                          Like HIV Hospital, etc :)
+                        </div>
+                      </li>
+
+                      <li class="clearfix">
+                        <div class="message-data align-right">
+                          <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+                          <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>
+                          
+                        </div>
+                        <div class="message other-message float-right">
+                          You can tell me some word like 'Show me any cancer hospital' or you can say 
+                          'cancer hospital'
+                        </div>
+                      </li>
+                      
+                    </ul>
+                    
+                  </div> 
+                  
+                  <div class="chat-message clearfix">
+                    <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+                  </div>
                   
                 </div> 
-                
-                <div class="chat-message clearfix">
-                  <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
-                </div>
-                
-              </div> 
-    
+      
 
+            </div>
           </div>
-        </div>
-        
+          
       </div>
     </CENTER>
-    <!--<script type="text/javascript">var s=document.createElement("script");s.id="chat";s.type="text/javascript";s.src="chat-builder.js";document.head.appendChild(s);</script>-->
+  </div>
 </body>
 
 <script>

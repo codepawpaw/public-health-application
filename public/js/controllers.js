@@ -64,15 +64,16 @@ angular.module('app.controllers', ['ngMaterial']).
 
 
     $scope.getLocation = function(criteria){
-        console.log("radius = "+$scope.radius);
         $scope.loading = true;
         self.toggleActivation();
-        if(criteria == 'doctor' || criteria == 'hospital'){
+        if(criteria == 'doctor'){
           $scope.image_url = "https://img.clipartfest.com/1d90d3fe2dc112f65b18fc2eab23e468_-doctor-logo-clip-art-png-clipart-images-of-doctor_800-1314.png";
+        } else if(criteria == 'hospital') {
+          $scope.image_url = "http://img.clipartall.com/this-nice-cartoon-hospital-clip-art-is-free-for-personal-or-commercial-use-use-this-clip-art-on-your-book-illustrations-medical-projects-school-projects-clip-art-hospital-687_572.png";
         } else if(criteria == 'dentist'){
           $scope.image_url = "https://practo-fabric.s3.amazonaws.com/namita-s-dental-clinic-faridabad-1460054622-5706aa5eebe43.png";
         } else if('insurance_agency'){
-          $scope.image_url = "http://www.pngall.com/wp-content/uploads/2016/06/Insurance-PNG-HD.png";
+          $scope.image_url = "https://s-media-cache-ak0.pinimg.com/originals/eb/70/c1/eb70c187b201143c6a964f597f9a0c85.png";
         } else {
           $scope.image_url = "https://img.clipartfest.com/471e53e4f7a24d1ec8cd6e4f9f0e9d8c_hair-beauty-salon-clip-art-beauty-salon-clipart-images_437-494.png";
         }
@@ -100,6 +101,12 @@ angular.module('app.controllers', ['ngMaterial']).
         $scope.loading = true;
         self.toggleActivation();
       }
+      if(keywords == 'drug store'){
+        $scope.image_url = "https://cdn.pixabay.com/photo/2014/03/25/16/24/medicine-296966_960_720.png";
+      } else if(keywords == 'ambulance'){
+        $scope.image_url = "http://www.clipartlord.com/wp-content/uploads/2014/04/ambulance5.png";
+      }
+
       navigator.geolocation.getCurrentPosition(function(position) {
         var myLocation = {
             lat: position.coords.latitude,
@@ -176,8 +183,8 @@ angular.module('app.controllers', ['ngMaterial']).
           position: place.geometry.location,
           icon: {
             url: $scope.image_url,
-            anchor: new google.maps.Point(50, 50),
-            scaledSize: new google.maps.Size(50, 57)
+            anchor: new google.maps.Point(60, 60),
+            scaledSize: new google.maps.Size(70, 67)
           }
         });
 
@@ -230,6 +237,7 @@ angular.module('app.controllers', ['ngMaterial']).
 
       for(var i = 0; i < places.length; i++){
         var place = places[i];
+        console.log(place);
         var isHealthPlace = false;
         for(var j = 0;j < place.types.length;j++){
           if(place.types[j] == "health" || place.types[j] == "hospital" || place.types[j] == "pharmacy"
