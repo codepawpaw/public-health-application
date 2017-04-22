@@ -21,12 +21,20 @@ module.exports = function(app){
 	      // If an intent was detected, log it out to the console.
 	      if (response.intents.length > 0) {
 	        if(response.intents[0].intent == "AskHospitalLocation"){
-	          if(response.entities[0].entity == "Disease"){
+	          if(response.entities.length > 0 && response.entities[0].entity == "Disease"){
 	            var disease_name = response.entities[0].value;
 	            result["result"] = disease_name;
 		        res.setHeader('Content-Type', 'application/json');
 	    		res.send(result);
+	          } else {
+	          	res.send({
+	          		result: 404
+	          	});
 	          }
+	        } else {
+	          res.send({
+	          	result: 404
+	          });
 	        }
 	        return;
 	      }

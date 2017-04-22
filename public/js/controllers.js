@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app.controllers', ['ngMaterial']).
-  controller('AppCtrl', function ($scope, socket, Service, $compile, $interval) {
+  controller('AppCtrl', function ($scope, socket, Service, $compile, $interval, $mdToast) {
 
     var self = this, j= 0, counter = 0;
 
@@ -58,7 +58,18 @@ angular.module('app.controllers', ['ngMaterial']).
          self.toggleActivation();
          $scope.loading = true;
          Service.getEntityWatson(message).success(function(result) {
-            $scope.getLocationByKeyword(result["result"]); 
+            if(result["result"] ==  404){
+              $scope.loading = false;
+              self.toggleActivation();
+
+              $mdToast.show({
+                hideDelay   : 5000,
+                position    : 'buttom left',
+                templateUrl : 'toast-template.html'
+              });
+            } else {
+              $scope.getLocationByKeyword(result["result"]); 
+            }
          });
          
     };
