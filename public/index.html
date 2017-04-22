@@ -77,7 +77,6 @@
 
   #inner {
     overflow: hidden;
-    width: 100%;
   }
 
   .child {
@@ -88,7 +87,7 @@
 
   .slide {
     float: left;
-    margin-left: 10px;
+    margin-left: 40px;
   }
 
   @-webkit-keyframes bounce {
@@ -390,9 +389,7 @@
           <span class="md-body-1"></span>
           <md-slider flex ng-model="radius" min="0" max="2000" aria-label="blue" id="blue-slider" class="md-primary">
           </md-slider>
-          <md-input-container>
-            <input flex type="number" ng-model="radius" aria-label="blue" aria-controls="blue-slider">
-          </md-input-container>
+          {{radius}}
         </md-slider-container>
       </div>
 
@@ -402,9 +399,7 @@
           <span class="md-body-1"></span>
           <md-slider flex ng-model="zoom" min="0" max="10" aria-label="blue" id="blue-slider" class="md-primary">
           </md-slider>
-          <md-input-container>
-            <input flex type="number" ng-model="zoom" aria-label="blue" aria-controls="blue-slider">
-          </md-input-container>
+          {{zoom}}
         </md-slider-container>
       </div>
     </div>

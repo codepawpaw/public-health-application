@@ -47,6 +47,7 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.indeterminate = false;
     $scope.image_url = "https://img.clipartfest.com/1d90d3fe2dc112f65b18fc2eab23e468_-doctor-logo-clip-art-png-clipart-images-of-doctor_800-1314.png";
     $scope.radius = 500;
+    $scope.zoom = 10;
 
     //--------------------------------------------
 
@@ -84,7 +85,7 @@ angular.module('app.controllers', ['ngMaterial']).
           };
           map = new google.maps.Map(document.getElementById('map'), {
             center: myLocation,
-            zoom: 10
+            zoom: $scope.zoom
           });
           var service = new google.maps.places.PlacesService(map);
           service.nearbySearch({
@@ -115,7 +116,7 @@ angular.module('app.controllers', ['ngMaterial']).
       
         map = new google.maps.Map(document.getElementById('map'), {
           center: myLocation,
-          zoom: 10
+          zoom: $scope.zoom
         });
 
         var service = new google.maps.places.PlacesService(map);
@@ -152,7 +153,7 @@ angular.module('app.controllers', ['ngMaterial']).
 
           directionsDisplay = new google.maps.DirectionsRenderer();
           var mapOptions = {
-            zoom:8,
+            zoom:$scope.zoom,
             center: myLocation
           }
           map = new google.maps.Map(document.getElementById('map'), mapOptions);
