@@ -84,10 +84,10 @@ angular.module('app.controllers', ['ngMaterial']).
           $scope.image_url = "http://img.clipartall.com/this-nice-cartoon-hospital-clip-art-is-free-for-personal-or-commercial-use-use-this-clip-art-on-your-book-illustrations-medical-projects-school-projects-clip-art-hospital-687_572.png";
         } else if(criteria == 'dentist'){
           $scope.image_url = "https://practo-fabric.s3.amazonaws.com/namita-s-dental-clinic-faridabad-1460054622-5706aa5eebe43.png";
-        } else if('insurance_agency'){
+        } else if(criteria == 'insurance_agency'){
           $scope.image_url = "https://s-media-cache-ak0.pinimg.com/originals/eb/70/c1/eb70c187b201143c6a964f597f9a0c85.png";
-        } else {
-          $scope.image_url = "https://img.clipartfest.com/471e53e4f7a24d1ec8cd6e4f9f0e9d8c_hair-beauty-salon-clip-art-beauty-salon-clipart-images_437-494.png";
+        } else if(criteria == 'gym'){
+          $scope.image_url = "https://www.careconnect.com/images/icons/gym-06.png";
         }
         navigator.geolocation.getCurrentPosition(function(position) {
           var myLocation = {
@@ -117,6 +117,14 @@ angular.module('app.controllers', ['ngMaterial']).
         $scope.image_url = "https://cdn.pixabay.com/photo/2014/03/25/16/24/medicine-296966_960_720.png";
       } else if(keywords == 'ambulance'){
         $scope.image_url = "http://www.clipartlord.com/wp-content/uploads/2014/04/ambulance5.png";
+      } else if(keywords == 'gym'){
+        $scope.image_url = "https://www.careconnect.com/images/icons/gym-06.png";
+      } else if(keywords == 'spa') {
+        $scope.image_url = "http://clipart-library.com/images/8T68KXkyc.png";
+      } else if(keywords == 'sport center'){
+        $scope.image_url = "https://bw-11f9e78e4899a78dedd439fc583b6693-bwcore.s3.amazonaws.com/articles/-A-free-sports-clipart-Sports.png";
+      } else if(keywords == 'swimming pool'){
+        $scope.image_url = "https://img.clipartfest.com/98ce110e547ddfdbeb4a2070fa8fd5f8_-pool-free-stock-photo-pool-transparent-background-clipart_958-566.png";
       }
 
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -252,8 +260,9 @@ angular.module('app.controllers', ['ngMaterial']).
         console.log(place);
         var isHealthPlace = false;
         for(var j = 0;j < place.types.length;j++){
-          if(place.types[j] == "health" || place.types[j] == "hospital" || place.types[j] == "pharmacy"
+          if(place.types[j] == "gym" || place.types[j] == "health" || place.types[j] == "hospital" || place.types[j] == "pharmacy"
              || place.types[j] == "insurance_agency" || place.types[j] == "dentist" || place.types[j] == "doctor"
+             || place.types[j] == "spa"
             ){
             addMarker(place);    
           }
