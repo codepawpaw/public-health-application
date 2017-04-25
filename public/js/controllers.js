@@ -80,7 +80,7 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.getLocation = function(criteria){
         $scope.clicked = true;
         $scope.loading = true;
-        //self.toggleActivation();
+        self.toggleActivation();
         if(criteria == 'doctor'){
           $scope.image_url = "http://img.clipartall.com/doctor-20clipart-doctors-clipart-800_784.png";
         } else if(criteria == 'hospital') {
@@ -92,23 +92,51 @@ angular.module('app.controllers', ['ngMaterial']).
         } else if(criteria == 'gym'){
           $scope.image_url = "https://www.careconnect.com/images/icons/gym-06.png";
         }
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var myLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: myLocation,
-            zoom: $scope.zoom
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var myLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: myLocation,
+              zoom: $scope.zoom
+            });
+            var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+              location: myLocation,
+              radius: $scope.radius,
+              types: [criteria]
+            }, callback);
+          }, function(error) {
+            console.log(error);
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: -34.397, lng: 150.644},
+              zoom: 6
+            });
+            handleLocationError(true, map.getCenter());
           });
-          var service = new google.maps.places.PlacesService(map);
-          service.nearbySearch({
-            location: myLocation,
-            radius: $scope.radius,
-            types: [criteria]
-          }, callback);
-        });
+        } else {
+          map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: -34.397, lng: 150.644},
+              zoom: 6
+          });
+          handleLocationError(false, map.getCenter());
+        }
     };
+
+    function handleLocationError(browserHasGeolocation, pos) {
+        if(!pos){
+          pos = {lat: -34.397, lng: 150.644};
+        }
+        var infoWindow = new google.maps.InfoWindow;
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed. Please check your geolocation service' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
     
 
     $scope.getLocationByKeyword = function(keywords){
@@ -204,12 +232,12 @@ angular.module('app.controllers', ['ngMaterial']).
         var marker = new google.maps.Marker({
           map: map,
           title: place.name,
-          position: place.geometry.location/*,
+          position: place.geometry.location,
           icon: {
             url: $scope.image_url,
             anchor: new google.maps.Point(60, 60),
             scaledSize: new google.maps.Size(70, 67)
-          }*/
+          }
         });
 
       google.maps.event.addListener(marker, 'click', function() {
@@ -271,6 +299,7 @@ angular.module('app.controllers', ['ngMaterial']).
       $scope.loading = false;
       $scope.clicked = false;
       map.fitBounds(bounds);
+      console.log("selesai");
       self.toggleActivation();
     }
       
