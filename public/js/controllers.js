@@ -102,7 +102,7 @@ angular.module('app.controllers', ['ngMaterial']).
             };
             console.log(position);
             map = new google.maps.Map(document.getElementById('map'), {
-              center: myLocation,
+              center: {lat: -34.397, lng: 150.644},
               zoom: $scope.zoom
             });
             var service = new google.maps.places.PlacesService(map);

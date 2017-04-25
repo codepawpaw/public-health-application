@@ -6,7 +6,7 @@
 	<title>Open Source Live Chat For CRM</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <!-- Angular Material style sheet -->
-  <!--<link rel="stylesheet" href="/css/bootstrap.css">-->
+  <link rel="stylesheet" href="/css/bootstrap.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/material-design.css">
 
@@ -18,11 +18,6 @@
   
 <style type="text/css">
 
-  #map {
-    height: 500px;
-    margin: 10px auto;
-    width: 800px;
-  }
   .carddemoBasicUsage .card-media {
     background-color: #999999; 
   }
@@ -77,12 +72,18 @@
 
   #inner {
     overflow: hidden;
+    width: 100%;
   }
 
   .child {
     float: left;
     width: 25%;
     margin-left: 10px;
+  }
+
+  .map-container {
+    float: left;
+    width: :70%;
   }
 
   .slide {
@@ -354,10 +355,7 @@
 
 
 <body ng-app="app" ng-controller="AppCtrl">
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC4F1taCKRK1_LYV3SVxxiR6yKl-PidgmA&libraries=places"></script>
-  <!--<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIFIBs6aXjAaUS8-QC96p0c2DVrlvfeuA&callback=initMap">
-    </script>-->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr_iUCi2aTZSqMei67TJJz6Q7V1tXdHdc&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
@@ -370,9 +368,8 @@
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   
-
   <div id="container">
     <div id="inner">
       <div class="slide">
@@ -399,75 +396,54 @@
       </div>
     </div>
   </div>
-  <div>
-    <CENTER>
-      <div id="container">
-          
-          <div id="inner">
-            <div>
-              <div ng-show="loading == true">
-              <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
-              </div>
-              <div id="map" style="width:73%;height:100%;float: left;margin-left:10px;"></div>
-            </div>
 
-            <div class="child" class="md-primary md-raised">
-                <div class="bounce"></div>
-                <div class="chat">
-                  <div class="chat-header clearfix">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
+  <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
+  <div id="map" style="width:73%;height:100%;float: left;margin-left:10px;"></div>
+  <div class="child" class="md-primary md-raised">
+    <div class="bounce"></div>
+    <div class="chat">
+      <div class="chat-header clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
                     
-                    <div class="chat-about">
-                      <div class="chat-with">Chat with Doyok</div>
-                      <div class="chat-num-messages">Powered By IBM Watson</div>
-                      <div class="chat-num-messages">Active</div>
-                    </div>
-                    <i class="fa fa-star"></i>
-                  </div> 
+        <div class="chat-about">
+          <div class="chat-with">Chat with Doyok</div>
+          <div class="chat-num-messages">Powered By IBM Watson</div>
+          <div class="chat-num-messages">Active</div>
+        </div>
+        <i class="fa fa-star"></i>
+      </div> 
                   
-                  <div class="chat-history">
-                    <ul class="ul-chat-history">
-                      <li class="clearfix">
-                        <div class="message-data align-right">
-                          <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-                          <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>
-                          
-                        </div>
-                        <div class="message other-message float-right">
-                          Hi, how are you? My Name is Doyok. 
-                          You can ask about the location of the health venue we did not provide on the menu.
-                          Like HIV Hospital, etc :)
-                        </div>
-                      </li>
-
-                      <li class="clearfix">
-                        <div class="message-data align-right">
-                          <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-                          <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>
-                          
-                        </div>
-                        <div class="message other-message float-right">
-                          You can tell me some word like 'Show me any cancer hospital' or you can say 
-                          'cancer hospital'
-                        </div>
-                      </li>
-                      
-                    </ul>
-                    
-                  </div> 
-                  
-                  <div class="chat-message clearfix">
-                    <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
-                  </div>
-                  
-                </div> 
-      
-
+      <div class="chat-history">
+        <ul class="ul-chat-history">
+          <li class="clearfix">
+            <div class="message-data align-right">
+              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>              
             </div>
-          </div>
-          
+            <div class="message other-message float-right">
+              Hi, how are you? My Name is Doyok. 
+              You can ask about the location of the health venue we did not provide on the menu.
+              Like HIV Hospital, etc :)
+            </div>
+          </li>
+
+          <li class="clearfix">
+            <div class="message-data align-right">
+              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>              
+            </div>
+            <div class="message other-message float-right">
+              You can tell me some word like 'Show me any cancer hospital' or you can say 
+              'cancer hospital'
+            </div>
+          </li>         
+        </ul>            
+      </div> 
+                  
+      <div class="chat-message clearfix">
+        <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
       </div>
-    </CENTER>
+    </div> 
   </div>
 </body>
 
