@@ -80,13 +80,13 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.getLocation = function(criteria){
         $scope.clicked = true;
         $scope.loading = true;
-        self.toggleActivation();
+        //self.toggleActivation();
         if(criteria == 'doctor'){
-          $scope.image_url = "https://img.clipartfest.com/1d90d3fe2dc112f65b18fc2eab23e468_-doctor-logo-clip-art-png-clipart-images-of-doctor_800-1314.png";
+          $scope.image_url = "http://img.clipartall.com/doctor-20clipart-doctors-clipart-800_784.png";
         } else if(criteria == 'hospital') {
           $scope.image_url = "http://img.clipartall.com/this-nice-cartoon-hospital-clip-art-is-free-for-personal-or-commercial-use-use-this-clip-art-on-your-book-illustrations-medical-projects-school-projects-clip-art-hospital-687_572.png";
         } else if(criteria == 'dentist'){
-          $scope.image_url = "https://practo-fabric.s3.amazonaws.com/namita-s-dental-clinic-faridabad-1460054622-5706aa5eebe43.png";
+          $scope.image_url = "https://img.clipartfest.com/091825e5a878a9f441ff71c58571576d_happy-tooth-dentist-clipart-transparent_225-300.png";
         } else if(criteria == 'insurance_agency'){
           $scope.image_url = "https://s-media-cache-ak0.pinimg.com/originals/eb/70/c1/eb70c187b201143c6a964f597f9a0c85.png";
         } else if(criteria == 'gym'){
@@ -204,20 +204,15 @@ angular.module('app.controllers', ['ngMaterial']).
         var marker = new google.maps.Marker({
           map: map,
           title: place.name,
-          position: place.geometry.location,
+          position: place.geometry.location/*,
           icon: {
             url: $scope.image_url,
             anchor: new google.maps.Point(60, 60),
             scaledSize: new google.maps.Size(70, 67)
-          }
+          }*/
         });
 
       google.maps.event.addListener(marker, 'click', function() {
-        if (marker.getAnimation() !== null && marker.getAnimation() === google.maps.Animation.BOUNCE) {
-          marker.setAnimation(null);
-        } else {
-          //marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
 
         var service = new google.maps.places.PlacesService(map);
         service.getDetails(place, function(result, status) {

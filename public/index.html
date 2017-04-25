@@ -4,14 +4,12 @@
 	<title>Open Source Live Chat For CRM</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <!-- Angular Material style sheet -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/bootstrap.css">
+  <!--<link rel="stylesheet" href="/css/bootstrap.css">-->
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/material-design.css">
 
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
   <link rel="stylesheet" href="/css/chat.css">
 
 
@@ -358,10 +356,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-  <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAA6UMLegQg4ybqJwNHbovf76iokNsF_ns&libraries=places'></script>
+  <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDEOI3WqHrKX_gd4cBoyLyodJ_7VcV4VS0&libraries=places'></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
   <script src="js/appService.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
@@ -403,7 +402,7 @@
           <div id="inner">
             <div>
               <div ng-show="loading == true">
-              <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
+              <!--<md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>-->
               </div>
               <div id="map" style="width:73%;height:100%;float: left;margin-left:10px;"></div>
             </div>
@@ -468,5 +467,42 @@
   </div>
 </body>
 
+<script>
+  $('#message-to-send').keypress(function(e) {
+    if(e.which == 13) {
+      var messageHTML = '<li>'+
+        '<div class="message-data">'+
+          '<span class="message-data-name"><i class="fa fa-circle online"></i> You</span>'+
+          '<span class="message-data-time">10:12 AM, Today</span>'+
+        '</div>'+
+        '<div class="message my-message">'+
+          $('#message-to-send').val()+
+        '</div>'+
+      '</li>';
+      $('.chat-history ul').append(messageHTML);
+      var text = $('#message-to-send').val();
+      var message = text.replace(/\r?\n/g, '');
+
+      var messageHTML2 = '<li class="clearfix">'+
+        '<div class="message-data align-right">'+
+        '<span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;'+
+        '<span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>'+
+        '</div>'+
+        '<div class="message other-message float-right">'+
+        'Please wait, your request is being processing'+
+        '</div>'+
+        '</li>';
+        $('.chat-history ul').append(messageHTML2);
+
+      angular.element(document.querySelector('[ng-controller="AppCtrl"]')).scope().sendSocket(message);
+      //socket.emit('send:chat', { text: message , from: 'visitor'});
+      $('#message-to-send').val("");
+    }
+  });
+  
+  
+
+
+</script>
  
 </html>
