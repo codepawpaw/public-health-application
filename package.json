@@ -12,7 +12,8 @@
     "http":"0.0.0",
     "path":"0.12.7",
     "body-parser":"*",
-    "method-override":"*"
+    "method-override":"*",
+    "watson-developer-cloud":"2.29.0"
   },
   "keywords": [
     "node.js",
