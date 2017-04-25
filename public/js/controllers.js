@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app.controllers', ['ngMaterial']).
-  controller('AppCtrl', function ($scope, socket, Service, $compile, $interval, $mdToast) {
+  controller('AppCtrl', function ($scope, Service, $compile, $interval, $mdToast) {
 
     var self = this, j= 0, counter = 0;
 
@@ -280,7 +280,7 @@ angular.module('app.controllers', ['ngMaterial']).
     }
       
   }).
-  controller('controller1', function ($scope, socket) {
+  controller('controller1', function ($scope) {
 
   }).
   controller('controller2', function ($scope) {

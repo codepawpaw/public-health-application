@@ -53,7 +53,7 @@ server.listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var io = require('socket.io').listen(server);
+/*var io = require('socket.io').listen(server);
 io.sockets.on('connection', require('./routes/socket'));
-module.exports.io = io;
+module.exports.io = io;*/
 exports = module.exports = app;

@@ -4,12 +4,10 @@ angular.module('app', [
   'ngRoute',
   'app.controllers',
   'app.filters',
-  'app.services',
   'app.appServices',
   'app.directives',
   'ngMaterial',
-  'ngMessages',
-  'btford.socket-io'
+  'ngMessages'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
