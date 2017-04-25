@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "express":"*",
-    "http":"*",
-    "path":"*",
+    "http":"0.0.0",
+    "path":"0.12.7",
     "body-parser":"*",
     "method-override":"*"
   },
@@ -21,6 +21,9 @@
     "watson",
     "ibm"
   ],
+  "engines": {
+    "node": "*"
+  },
   "author": "Jonathan Natanael Siahaan <jonathannael12@gmail.com>",
   "license": "ISC"
 }
