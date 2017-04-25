@@ -218,6 +218,9 @@ angular.module('app.controllers', ['ngMaterial']).
           }
         });
       google.maps.event.addListener(marker, 'click', function() {
+        $scope.clicked = true;
+        $scope.loading = true;
+        self.toggleActivation();
 
         var service = new google.maps.places.PlacesService(map);
         service.getDetails(place, function(result, status) {
@@ -249,6 +252,9 @@ angular.module('app.controllers', ['ngMaterial']).
           });
           
           infowindow.open(map, marker);
+          $scope.clicked = false;
+          $scope.loading = false;
+          self.toggleActivation();
         });
         
       });
