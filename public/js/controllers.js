@@ -45,7 +45,6 @@ angular.module('app.controllers', ['ngMaterial']).
 
     $scope.loading = false;
     $scope.indeterminate = false;
-    $scope.image_url = "https://img.clipartfest.com/1d90d3fe2dc112f65b18fc2eab23e468_-doctor-logo-clip-art-png-clipart-images-of-doctor_800-1314.png";
     $scope.radius = 500;
     $scope.zoom = 10;
     $scope.clicked = false;
@@ -81,17 +80,6 @@ angular.module('app.controllers', ['ngMaterial']).
         $scope.clicked = true;
         $scope.loading = true;
         self.toggleActivation();
-        if(criteria == 'doctor'){
-          $scope.image_url = "http://img.clipartall.com/doctor-20clipart-doctors-clipart-800_784.png";
-        } else if(criteria == 'hospital') {
-          $scope.image_url = "http://img.clipartall.com/this-nice-cartoon-hospital-clip-art-is-free-for-personal-or-commercial-use-use-this-clip-art-on-your-book-illustrations-medical-projects-school-projects-clip-art-hospital-687_572.png";
-        } else if(criteria == 'dentist'){
-          $scope.image_url = "https://img.clipartfest.com/091825e5a878a9f441ff71c58571576d_happy-tooth-dentist-clipart-transparent_225-300.png";
-        } else if(criteria == 'insurance_agency'){
-          $scope.image_url = "https://s-media-cache-ak0.pinimg.com/originals/eb/70/c1/eb70c187b201143c6a964f597f9a0c85.png";
-        } else if(criteria == 'gym'){
-          $scope.image_url = "https://www.careconnect.com/images/icons/gym-06.png";
-        }
         if (navigator.geolocation) {
             
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -146,19 +134,6 @@ angular.module('app.controllers', ['ngMaterial']).
       if($scope.loading == false){
         $scope.loading = true;
         self.toggleActivation();
-      }
-      if(keywords == 'drug store'){
-        $scope.image_url = "https://cdn.pixabay.com/photo/2014/03/25/16/24/medicine-296966_960_720.png";
-      } else if(keywords == 'ambulance'){
-        $scope.image_url = "http://www.clipartlord.com/wp-content/uploads/2014/04/ambulance5.png";
-      } else if(keywords == 'gym'){
-        $scope.image_url = "https://www.careconnect.com/images/icons/gym-06.png";
-      } else if(keywords == 'spa') {
-        $scope.image_url = "http://clipart-library.com/images/8T68KXkyc.png";
-      } else if(keywords == 'sport center'){
-        $scope.image_url = "https://bw-11f9e78e4899a78dedd439fc583b6693-bwcore.s3.amazonaws.com/articles/-A-free-sports-clipart-Sports.png";
-      } else if(keywords == 'swimming pool'){
-        $scope.image_url = "https://img.clipartfest.com/98ce110e547ddfdbeb4a2070fa8fd5f8_-pool-free-stock-photo-pool-transparent-background-clipart_958-566.png";
       }
 
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -237,9 +212,9 @@ angular.module('app.controllers', ['ngMaterial']).
           title: place.name,
           position: place.geometry.location,
           icon: {
-            url: $scope.image_url,
+            url: 'http://images.clipartpanda.com/location-icon-vector-location_map_pin_black5.png',
             anchor: new google.maps.Point(60, 60),
-            scaledSize: new google.maps.Size(70, 67)
+            scaledSize: new google.maps.Size(45, 67)
           }
         });
       google.maps.event.addListener(marker, 'click', function() {
@@ -255,7 +230,7 @@ angular.module('app.controllers', ['ngMaterial']).
             lng: result.geometry.location.lng()
           };
           $scope.end = end;
-          var contentString = '<div id="content">'+
+          var contentString = '<CENTER><div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">'+result.name+'</h1><BR>'+
@@ -266,7 +241,7 @@ angular.module('app.controllers', ['ngMaterial']).
             '<a href="'+result.url+'"><button class="md-primary md-raised md-button md-ink-ripple" type="button" ">See On Gmap</button></a>'+
             '<button class="md-primary md-raised md-button md-ink-ripple" type="button" ng-click="getDirection();">Get Direction</button>'+'<br>'+
             '</div>'+
-            '</div>';
+            '</div></CENTER>';
 
           var elTooltip = $compile(contentString)($scope);
           var infowindow = new google.maps.InfoWindow({
