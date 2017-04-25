@@ -93,10 +93,18 @@ angular.module('app.controllers', ['ngMaterial']).
           $scope.image_url = "https://www.careconnect.com/images/icons/gym-06.png";
         }
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var myLocation = {
+          Service.getCurrentLocation().success(function(result) {
+            console.log(result);
+            var loc = result.loc.split(',');
+            
+          //navigator.geolocation.getCurrentPosition(function(position) {
+            /*var myLocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
+            };*/
+            var myLocation = {
+              lat: parseInt(loc[0]),
+              lng: parseInt(loc[1])
             };
 
             map = new google.maps.Map(document.getElementById('map'), {
@@ -186,6 +194,8 @@ angular.module('app.controllers', ['ngMaterial']).
 
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
+        console.log("callback");
+        console.log(results);
         createMarkers(results);
       }
     }
@@ -239,7 +249,6 @@ angular.module('app.controllers', ['ngMaterial']).
             scaledSize: new google.maps.Size(70, 67)
           }
         });
-
       google.maps.event.addListener(marker, 'click', function() {
 
         var service = new google.maps.places.PlacesService(map);
@@ -281,7 +290,7 @@ angular.module('app.controllers', ['ngMaterial']).
     function createMarkers(places) {
       var bounds = new google.maps.LatLngBounds();
       var placesList = document.getElementById('places');
-
+      console.log(places);
       for(var i = 0; i < places.length; i++){
         var place = places[i];
         console.log(place);

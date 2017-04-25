@@ -55,6 +55,9 @@ angular.module('app.appServices', []).
 			},
 			getEntityWatson : function(message) {
 				return $http.get('http://localhost:2054/api/watson/'+message)
+			},
+			getCurrentLocation : function(){
+				return $http.get('http://ipinfo.io');
 			}
 	}
   });

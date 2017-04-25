@@ -346,14 +346,16 @@
   }
 
 
-
-
 </style>
 
 </head>
+
+
 <body ng-app="app" ng-controller="AppCtrl">
-  <!--<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDEOI3WqHrKX_gd4cBoyLyodJ_7VcV4VS0&libraries=places'></script>-->
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=AIzaSyDEOI3WqHrKX_gd4cBoyLyodJ_7VcV4VS0&libraries=places"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=AIzaSyC4F1taCKRK1_LYV3SVxxiR6yKl-PidgmA&libraries=places"></script>
+  <!--<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIFIBs6aXjAaUS8-QC96p0c2DVrlvfeuA&callback=initMap">
+    </script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
@@ -395,7 +397,6 @@
       </div>
     </div>
   </div>
-
   <div>
     <CENTER>
       <div id="container">
@@ -403,7 +404,7 @@
           <div id="inner">
             <div>
               <div ng-show="loading == true">
-              <!--<md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>-->
+              <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
               </div>
               <div id="map" style="width:73%;height:100%;float: left;margin-left:10px;"></div>
             </div>
@@ -505,5 +506,7 @@
 
 
 </script>
+
+
  
 </html>
