@@ -3,7 +3,17 @@
 /* Controllers */
 
 angular.module('app.controllers', ['ngMaterial']).
-  controller('AppCtrl', function ($scope, Service, $compile, $interval, $mdToast) {
+  controller('AppCtrl', function ($scope, Service, $compile, $interval, $mdToast, $mdSidenav) {
+
+    $scope.toggleLeft = buildToggler('left');
+
+    $scope.toggleRight = buildToggler('right');
+
+    function buildToggler(componentId) {
+      return function() {
+        $mdSidenav(componentId).toggle();
+      };
+    }
 
     var self = this, j= 0, counter = 0;
 
@@ -41,6 +51,7 @@ angular.module('app.controllers', ['ngMaterial']).
       self.mode = (self.mode == 'query' ? 'determinate' : 'query');
     }, 7200, 0, true);
 
+
     //---------- INITIAL VALUE ---------------------
 
     $scope.loading = false;
@@ -48,14 +59,25 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.radius = 500;
     $scope.zoom = 10;
     $scope.clicked = false;
+    $scope.circularActivated = false;
 
     //--------------------------------------------
 
     //-------------------------------------------------------------------------------------------
+
+    $scope.openNav = function() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    $scope.closeNav = function() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+
     var map;
 
     $scope.sendSocket = function(message){
          $scope.clicked = true;
+         $scope.closeNav();
          self.toggleActivation();
          $scope.loading = true;
          Service.getEntityWatson(message).success(function(result) {
@@ -79,6 +101,7 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.getLocation = function(criteria){
         $scope.clicked = true;
         $scope.loading = true;
+        $scope.closeNav();
         self.toggleActivation();
         if (navigator.geolocation) {
             
@@ -88,9 +111,8 @@ angular.module('app.controllers', ['ngMaterial']).
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-            console.log(position);
             map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: -34.397, lng: 150.644},
+              center: myLocation,
               zoom: $scope.zoom
             });
             var service = new google.maps.places.PlacesService(map);
@@ -100,7 +122,6 @@ angular.module('app.controllers', ['ngMaterial']).
               types: [criteria]
             }, callback);
           }, function(error) {
-            console.log(error);
             map = new google.maps.Map(document.getElementById('map'), {
               center: {lat: -34.397, lng: 150.644},
               zoom: 6
@@ -130,6 +151,7 @@ angular.module('app.controllers', ['ngMaterial']).
     
 
     $scope.getLocationByKeyword = function(keywords){
+      $scope.closeNav();
       $scope.clicked = true;
       if($scope.loading == false){
         $scope.loading = true;
@@ -163,7 +185,6 @@ angular.module('app.controllers', ['ngMaterial']).
 
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        console.log("callback");
         createMarkers(results);
       }
     }
@@ -173,6 +194,10 @@ angular.module('app.controllers', ['ngMaterial']).
     var map;
 
     $scope.getDirection = function(){
+      $scope.circularActivated = true;
+      $( "#price" ).empty();
+      $( "#time" ).empty();
+      $scope.openNav();
       var place = $scope.end;
       navigator.geolocation.getCurrentPosition(function(position) {
           var myLocation = {
@@ -185,6 +210,32 @@ angular.module('app.controllers', ['ngMaterial']).
             zoom:$scope.zoom,
             center: myLocation
           }
+
+          Service.getUberPriceEstimation(myLocation, place).success(function(result) {
+            var messageHTML = '<div>';
+            for(var i = 0;i<result.prices.length;i++){
+              messageHTML += '<b>' + result.prices[i].display_name + '</b>&nbsp;&nbsp;&nbsp;';
+              messageHTML += result.prices[i].estimate;
+              messageHTML += '<BR>';
+            }
+
+            messageHTML += '</div';
+            $('#price').append(messageHTML);
+          });
+
+          Service.getUberTimeEstimation(place).success(function(result) {
+            var messageHTML = '<div><BR>';
+            for(var i =0;i<result.times.length;i++){
+              messageHTML += '<b>' + result.times[i].display_name + '</b>&nbsp;&nbsp;&nbsp;';
+              messageHTML += result.times[i].estimate + ' minutes';
+              messageHTML += '<BR>';
+            }
+
+            messageHTML += '</div';
+            $('#time').append(messageHTML);
+          });
+
+
           map = new google.maps.Map(document.getElementById('map'), mapOptions);
           directionsDisplay.setMap(map);
           calcRoute(myLocation, place);
@@ -202,6 +253,7 @@ angular.module('app.controllers', ['ngMaterial']).
       directionsService.route(request, function(result, status) {
         if (status == 'OK') {
           directionsDisplay.setDirections(result);
+          $scope.circularActivated = false;
         }
       });
     }
@@ -220,12 +272,10 @@ angular.module('app.controllers', ['ngMaterial']).
       google.maps.event.addListener(marker, 'click', function() {
         $scope.clicked = true;
         $scope.loading = true;
-        self.toggleActivation();
 
         var service = new google.maps.places.PlacesService(map);
         service.getDetails(place, function(result, status) {
           if (status !== google.maps.places.PlacesServiceStatus.OK) {
-            console.error(status);
             return;
           }
           var end = {
@@ -233,15 +283,19 @@ angular.module('app.controllers', ['ngMaterial']).
             lng: result.geometry.location.lng()
           };
           $scope.end = end;
+
           var contentString = '<CENTER><div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">'+result.name+'</h1><BR>'+
             '<div id="bodyContent">'+
-            '<p>'+result.formatted_address+'</p>'+'<br>'+
-            '<p>'+result.formatted_phone_number+'</p>'+
-            '<p> Rating '+result.rating+'</p>'+
-            '<a href="'+result.url+'"><button class="md-primary md-raised md-button md-ink-ripple" type="button" ">See On Gmap</button></a>'+
+            '<p>'+result.formatted_address+'</p>'+'<br>';
+
+          if(result.formatted_phone_number != undefined) contentString += '<p>'+result.formatted_phone_number+'</p>';
+
+          if(result.rating != undefined) contentString += '<p> Rating '+result.rating+'</p>';
+
+          contentString += '<a href="'+result.url+'"><button class="md-primary md-raised md-button md-ink-ripple" type="button" ">See On Gmap</button></a>'+
             '<button class="md-primary md-raised md-button md-ink-ripple" type="button" ng-click="getDirection();">Get Direction</button>'+'<br>'+
             '</div>'+
             '</div></CENTER>';
@@ -266,7 +320,6 @@ angular.module('app.controllers', ['ngMaterial']).
       var placesList = document.getElementById('places');
       for(var i = 0; i < places.length; i++){
         var place = places[i];
-        console.log(place);
         var isHealthPlace = false;
         for(var j = 0;j < place.types.length;j++){
           if(place.types[j] == "gym" || place.types[j] == "health" || place.types[j] == "hospital" || place.types[j] == "pharmacy"
@@ -281,7 +334,6 @@ angular.module('app.controllers', ['ngMaterial']).
       $scope.loading = false;
       $scope.clicked = false;
       map.fitBounds(bounds);
-      console.log("selesai");
       self.toggleActivation();
     }
       

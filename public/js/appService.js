@@ -9,6 +9,12 @@ angular.module('app.appServices', []).
 			},
 			getCurrentLocation : function(){
 				return $http.get('https://ipinfo.io');
+			},
+			getUberPriceEstimation : function(from, to){
+				return $http.get('http://localhost:2054/api/uber/estimates/price/'+from.lat+'/'+from.lng+'/'+to.lat+'/'+to.lng)
+			},
+			getUberTimeEstimation : function(to){
+				return $http.get('http://localhost:2054/api/uber/estimates/time/'+to.lat+'/'+to.lng)
 			}
 	}
   });

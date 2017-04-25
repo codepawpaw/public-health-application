@@ -349,6 +349,62 @@
   }
 
 
+
+
+
+
+  /* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: white; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+
 </style>
 
 </head>
@@ -396,6 +452,30 @@
       </div>
     </div>
   </div>
+
+  <div id="mySidenav" class="sidenav">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Uber</h1>
+      </md-toolbar>
+      <CENTER><md-progress-circular ng-disabled="!circularActivated" md-mode="indeterminate"></md-progress-circular></CENTER>
+
+      <md-content layout-margin>
+        <div id="price">
+          <p>
+            <b>Uber Price Estimation</b><BR>
+          </p>
+        </div>
+        <div id="time">
+          <p>
+            <b>Uber Time Estimation</b><BR>
+          </p>
+        </div>
+        <md-button ng-click="closeNav()" class="md-accent">
+          Close
+        </md-button>
+      </md-content>
+  </div>
+
 
   <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
   <div id="map" style="width:73%;height:100%;float: left;margin-left:10px;"></div>
@@ -447,7 +527,11 @@
   </div>
 </body>
 
+
+
 <script>
+  
+
   $('#message-to-send').keypress(function(e) {
     if(e.which == 13) {
       var messageHTML = '<li>'+
