@@ -115,7 +115,7 @@ angular.module('app.controllers', ['ngMaterial']).
             if(result["result"] ==  404){
               $scope.loading = false;
               self.toggleActivation();
-
+              $scope.clicked = false;
               $mdToast.show({
                 hideDelay   : 5000,
                 position    : 'buttom left',
