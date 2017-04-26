@@ -82,6 +82,16 @@ angular.module('app.controllers', ['ngMaterial']).
 
     //-------------------------------------------------------------------------------------------
 
+    $(window).resize(function(){
+        if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+           document.getElementById("map").style.width = "100%";
+           document.getElementById("watson").style.width = "60%";
+        } else {
+           document.getElementById("map").style.width = "75%";
+           document.getElementById("watson").style.width = "23%";
+        }     
+    });
+
     $scope.openNav = function() {
       document.getElementById("mySidenav").style.width = "15%";
     }
