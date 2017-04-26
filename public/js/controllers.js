@@ -119,11 +119,34 @@ angular.module('app.controllers', ['ngMaterial']).
               types: [criteria]
             }, callback);
           }, function(error) {
-            map = new google.maps.Map(document.getElementById('map'), {
+            console.log(error);
+
+            Service.getCurrentLocation().success(function(result) {
+              var loc = result.loc.split(",");
+              var myLocation = {
+                lat: parseInt(loc[0]),
+                lng: parseInt(loc[1])
+              };
+
+              map = new google.maps.Map(document.getElementById('map'), {
+                center: myLocation,
+                zoom: $scope.zoom
+              });
+
+              var service = new google.maps.places.PlacesService(map);
+              service.nearbySearch({
+                location: myLocation,
+                radius: $scope.radius,
+                types: [criteria]
+              }, callback);
+
+              });
+
+            /*map = new google.maps.Map(document.getElementById('map'), {
               center: {lat: -34.397, lng: 150.644},
               zoom: 6
             });
-            handleLocationError(true, map.getCenter());
+            handleLocationError(true, map.getCenter());*/
           });
         } else {
           map = new google.maps.Map(document.getElementById('map'), {
