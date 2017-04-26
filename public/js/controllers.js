@@ -190,6 +190,7 @@ angular.module('app.controllers', ['ngMaterial']).
       $scope.price = [];
       $scope.time = [];
       $scope.circularActivated = true;
+
       $scope.openNav();
       var place = $scope.end;
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -224,7 +225,6 @@ angular.module('app.controllers', ['ngMaterial']).
               };
               $scope.time.push(p);
             }
-
           });
 
 
