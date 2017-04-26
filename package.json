@@ -1,0 +1,30 @@
+{
+  "name": "doyok-health",
+  "version": "1.0.0",
+  "description": "a virtual assistant and a website that can assist you to access any things about health location",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express":"3.21.2",
+    "http":"0.0.0",
+    "path":"0.12.7",
+    "body-parser":"*",
+    "method-override":"*",
+    "watson-developer-cloud":"2.29.0"
+  },
+  "keywords": [
+    "node.js",
+    "angular.js",
+    "health",
+    "watson",
+    "ibm"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "author": "Jonathan Natanael Siahaan <jonathannael12@gmail.com>",
+  "license": "ISC"
+}
