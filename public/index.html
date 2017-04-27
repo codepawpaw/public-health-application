@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="dicoding:email" content="jonathannael12@gmail.com">
+	<title>Doyok</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/material-design.css">
+
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="/css/chat.css">
+
+
+  
+<style type="text/css">
+
+  .carddemoBasicUsage .card-media {
+    background-color: #999999; 
+  }
+
+  .tabsdemoDynamicTabs md-content {
+    background-color: transparent !important; 
+  }
+  .tabsdemoDynamicTabs md-content md-tabs {
+    border: 1px solid #e1e1e1; 
+  }
+  .tabsdemoDynamicTabs md-content md-tabs md-tab-content {
+    background: #f6f6f6; 
+  }
+  .tabsdemoDynamicTabs md-content md-tabs md-tabs-wrapper {
+    background: white; 
+  }
+  .tabsdemoDynamicTabs md-content h1:first-child {
+    margin-top: 0; 
+  }
+  .tabsdemoDynamicTabs md-input-container {
+    padding-bottom: 0; 
+  }
+  .tabsdemoDynamicTabs .remove-tab {
+    margin-bottom: 40px; 
+  }
+  .tabsdemoDynamicTabs .demo-tab > div > div {
+    padding: 25px;
+    box-sizing: border-box; 
+  }
+  .tabsdemoDynamicTabs .edit-form input {
+    width: 100%; 
+  }
+  .tabsdemoDynamicTabs md-tabs {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); 
+  }
+  .tabsdemoDynamicTabs md-tab[disabled] {
+    opacity: 0.5; 
+  }
+  .tabsdemoDynamicTabs label {
+    text-align: left; 
+  }
+  .tabsdemoDynamicTabs .long > input {
+    width: 264px; 
+  }
+  .tabsdemoDynamicTabs .md-button.add-tab {
+    transform: translateY(5px); 
+  }
+  #container {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  #inner {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .child {
+    float: left;
+    width: 23%;
+    margin-left: 10px;
+  }
+
+  .map-container {
+    float: left;
+    width: :70%;
+  }
+
+  .slide {
+    float: left;
+    margin-left: 40px;
+  }
+
+
+  /* The side navigation menu */
+  .sidenav {
+      height: 100%; /* 100% Full-height */
+      width: 0; /* 0 width - change this with JavaScript */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Stay on top */
+      top: 9%;
+      left: 0;
+      background-color: white; /* Black*/
+      overflow-x: hidden; /* Disable horizontal scroll */
+      padding-top: 60px; /* Place content 60px from the top */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  /* The navigation menu links */
+  .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s
+  }
+
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover, .offcanvas a:focus{
+      color: #f1f1f1;
+  }
+
+  /* Position and style the close button (top right corner) */
+  .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+  }
+
+  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+  #main {
+      transition: margin-left .5s;
+      padding: 20px;
+  }
+
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+  }
+ 
+
+</style>
+
+</head>
+
+
+<body ng-app="app" ng-controller="AppCtrl">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr_iUCi2aTZSqMei67TJJz6Q7V1tXdHdc&libraries=places"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/appService.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+  
+  <div id="container">
+    <div id="inner">
+      <div class="slide">
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('dentist')">Dentist</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('doctor')">Doctor</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('hospital')">Hospital</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocation('insurance_agency')">Insurance</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('drug store')">Drug Store</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('ambulance')">Ambulance</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('gym')">Gym</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" style="width:100px;" ng-click="getLocationByKeyword('spa')">Spa</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" ng-click="getLocationByKeyword('sport center')">Sport Center</md-button>
+        <md-button class="md-primary md-raised" ng-disabled="clicked" ng-click="getLocationByKeyword('swimming pool')">Swimming Pool</md-button>
+      </div> 
+
+      <div class="slide">
+        <span class="md-body-1">Radius Location Searching</span>
+        <md-slider-container class="slider">
+          <span class="md-body-1"></span>
+          <md-slider flex ng-model="radius" min="0" max="2000" aria-label="blue" id="blue-slider" class="md-primary">
+          </md-slider>
+          {{radius}}
+        </md-slider-container>
+      </div>
+    </div>
+  </div>
+
+  <div id="mySidenav" class="sidenav">
+      <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+          <span>Uber Price Estimation</span>
+        </h2>
+      </md-toolbar>
+      <md-content>
+        <md-list>
+          <md-list-item class="md-3-line" ng-repeat="item in price">
+            <div class="md-list-item-text">
+              <h3>{{item.display_name}}</h3>
+              <p>{{item.estimate}}</p>
+            </div>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-content>
+      <CENTER><md-progress-circular ng-disabled="!circularActivated" md-mode="indeterminate"></md-progress-circular></CENTER>
+
+      <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+          <span>Uber Time Estimation</span>
+        </h2>
+      </md-toolbar>
+      <md-content>
+        <md-list>
+          <md-list-item class="md-3-line" ng-repeat="item in time">
+            <div class="md-list-item-text">
+              <h3>{{item.display_name}}</h3>
+              <p>{{item.estimate}} Minutes</p>
+            </div>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-content>
+  </div>
+
+
+  <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
+  <div id="map" style="width:75%;height:100%;float: left;margin-left:10px;"></div>
+
+  <div id="watson" class="child" class="md-primary md-raised">
+    <div class="chat">
+      <div class="chat-header clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
+                    
+        <div class="chat-about">
+          <div class="chat-with">Chat with Doyok</div>
+          <div class="chat-num-messages">Powered By IBM Watson</div>
+          <div class="chat-num-messages">Active</div>
+        </div>
+        <i class="fa fa-star"></i>
+      </div> 
+                  
+      <div class="chat-history">
+        <ul class="ul-chat-history">
+          <li class="clearfix">
+            <div class="message-data align-right">
+              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>              
+            </div>
+            <div class="message other-message float-right">
+              Hi, how are you? My Name is Doyok. 
+              You can ask about the location of the health venue we did not provide on the menu.
+              Like HIV Hospital, etc :)
+            </div>
+          </li>
+
+          <li class="clearfix">
+            <div class="message-data align-right">
+              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>              
+            </div>
+            <div class="message other-message float-right">
+              You can tell me some word like 'Show me any cancer hospital' or you can say 
+              'cancer hospital'
+            </div>
+          </li>         
+        </ul>            
+      </div> 
+                  
+      <div class="chat-message clearfix">
+        <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+      </div>
+    </div> 
+  </div>
+</body>
+
+
+
+<script>
+  
+
+  $('#message-to-send').keypress(function(e) {
+    if(e.which == 13) {
+      var messageHTML = '<li>'+
+        '<div class="message-data">'+
+          '<span class="message-data-name"><i class="fa fa-circle online"></i> You</span>'+
+          '<span class="message-data-time">Today</span>'+
+        '</div>'+
+        '<div class="message my-message">'+
+          $('#message-to-send').val()+
+        '</div>'+
+      '</li>';
+      $('.chat-history ul').append(messageHTML);
+      var text = $('#message-to-send').val();
+      var message = text.replace(/\r?\n/g, '');
+
+      var messageHTML2 = '<li class="clearfix">'+
+        '<div class="message-data align-right">'+
+        '<span class="message-data-time" >Today</span> &nbsp; &nbsp;'+
+        '<span class="message-data-name" >Doyok</span> <i class="fa fa-circle me"></i>'+
+        '</div>'+
+        '<div class="message other-message float-right">'+
+        'Please wait, your request is being processing'+
+        '</div>'+
+        '</li>';
+        $('.chat-history ul').append(messageHTML2);
+
+      angular.element(document.querySelector('[ng-controller="AppCtrl"]')).scope().sendSocket(message);
+      //socket.emit('send:chat', { text: message , from: 'visitor'});
+      $('#message-to-send').val("");
+    }
+  });
+  
+  
+
+
+</script>
+
+
+ 
+</html>
