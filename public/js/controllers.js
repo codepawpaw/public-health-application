@@ -80,21 +80,13 @@ angular.module('app.controllers', ['ngMaterial']).
        }
     };
 
-<<<<<<< HEAD
     console.log(window.mobilecheck());
-
-=======
->>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
     //-------------------------------------------------------------------------------------------
 
     $(window).resize(function(){
         if(window.innerWidth <= 800 && window.innerHeight <= 600) {
            document.getElementById("map").style.width = "100%";
-<<<<<<< HEAD
            document.getElementById("watson").style.width = "90%";
-=======
-           document.getElementById("watson").style.width = "60%";
->>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
         } else {
            document.getElementById("map").style.width = "75%";
            document.getElementById("watson").style.width = "23%";
