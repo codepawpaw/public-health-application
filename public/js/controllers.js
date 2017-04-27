@@ -80,14 +80,21 @@ angular.module('app.controllers', ['ngMaterial']).
        }
     };
 
+<<<<<<< HEAD
     console.log(window.mobilecheck());
 
+=======
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
     //-------------------------------------------------------------------------------------------
 
     $(window).resize(function(){
         if(window.innerWidth <= 800 && window.innerHeight <= 600) {
            document.getElementById("map").style.width = "100%";
+<<<<<<< HEAD
            document.getElementById("watson").style.width = "90%";
+=======
+           document.getElementById("watson").style.width = "60%";
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
         } else {
            document.getElementById("map").style.width = "75%";
            document.getElementById("watson").style.width = "23%";
@@ -109,7 +116,10 @@ angular.module('app.controllers', ['ngMaterial']).
           document.getElementById("map").style.width = "100%";
           document.getElementById("watson").style.width = "60%";
          } 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
          $scope.clicked = true;
          $scope.closeNav();
          self.toggleActivation();
@@ -124,6 +134,7 @@ angular.module('app.controllers', ['ngMaterial']).
                 position    : 'buttom left',
                 templateUrl : 'toast-template.html'
               });
+<<<<<<< HEAD
 
               var messageHTML = '<li class="clearfix">'+
               '<div class="message-data align-right">'+
@@ -136,6 +147,8 @@ angular.module('app.controllers', ['ngMaterial']).
               '</li>';
               $('.chat-history ul').append(messageHTML);
 
+=======
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
             } else {
               $scope.getLocationByKeyword(result["result"]); 
             }
@@ -147,7 +160,11 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.getLocation = function(criteria){
         if(detectmob()){
           document.getElementById("map").style.width = "100%";
+<<<<<<< HEAD
           document.getElementById("watson").style.width = "90%";
+=======
+          document.getElementById("watson").style.width = "60%";
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
         } 
         $scope.clicked = true;
         $scope.loading = true;
@@ -172,6 +189,11 @@ angular.module('app.controllers', ['ngMaterial']).
               types: [criteria]
             }, callback);
           }, function(error) {
+<<<<<<< HEAD
+=======
+            console.log(error);
+
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
             Service.getCurrentLocation().success(function(result) {
               var loc = result.loc.split(",");
               var myLocation = {
@@ -224,7 +246,11 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.getLocationByKeyword = function(keywords){
       if(detectmob()){
           document.getElementById("map").style.width = "100%";
+<<<<<<< HEAD
           document.getElementById("watson").style.width = "90%";
+=======
+          document.getElementById("watson").style.width = "60%";
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
       } 
       $scope.closeNav();
       $scope.clicked = true;
@@ -261,6 +287,7 @@ angular.module('app.controllers', ['ngMaterial']).
     function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         createMarkers(results);
+<<<<<<< HEAD
       } else {
         $scope.clicked = false;
         $scope.loading = false;
@@ -270,13 +297,19 @@ angular.module('app.controllers', ['ngMaterial']).
           position    : 'buttom left',
           templateUrl : 'notfound.html'
         });
+=======
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
       }
     }
 
     $scope.getDirection = function(){
       if(detectmob()){
           document.getElementById("map").style.width = "100%";
+<<<<<<< HEAD
           document.getElementById("watson").style.width = "90%";
+=======
+          document.getElementById("watson").style.width = "60%";
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
       } 
       $scope.price = [];
       $scope.time = [];
@@ -337,6 +370,7 @@ angular.module('app.controllers', ['ngMaterial']).
         if (status == 'OK') {
           directionsDisplay.setDirections(result);
           $scope.circularActivated = false;
+<<<<<<< HEAD
         } else {
           $scope.clicked = false;
           $scope.loading = false;
@@ -346,6 +380,8 @@ angular.module('app.controllers', ['ngMaterial']).
             position    : 'buttom left',
             templateUrl : 'notfound.html'
           });
+=======
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
         }
       });
     }
@@ -410,8 +446,12 @@ angular.module('app.controllers', ['ngMaterial']).
     function createMarkers(places) {
       var bounds = new google.maps.LatLngBounds();
       var placesList = document.getElementById('places');
+<<<<<<< HEAD
       var length = (places.length > 30)? 30 : places.length; 
       for(var i = 0; i < length; i++){
+=======
+      for(var i = 0; i < places.length; i++){
+>>>>>>> dfde42129923dc6a75799eb7cbb426429dd85a6c
         var place = places[i];
         var isHealthPlace = false;
         for(var j = 0;j < place.types.length;j++){
