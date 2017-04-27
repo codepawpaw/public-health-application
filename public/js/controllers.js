@@ -171,51 +171,37 @@ angular.module('app.controllers', ['ngMaterial']).
           }, function(error) {
             console.log(error);
             Service.getCurrentLocation().success(function(result) {
-              var loc = result.loc.split(",");
-              var myLocation = {
-                lat: parseInt(loc[0]),
-                lng: parseInt(loc[1])
-              };
-
-              map = new google.maps.Map(document.getElementById('map'), {
-                center: myLocation,
-                zoom: $scope.zoom
-              });
-
-              var service = new google.maps.places.PlacesService(map);
-              service.nearbySearch({
-                location: myLocation,
-                radius: $scope.radius,
-                types: [criteria]
-              }, callback);
-
-              });
-
-            /*map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: -34.397, lng: 150.644},
-              zoom: 6
+                var loc = result.loc.split(",");
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: parseInt(loc[0]), lng: parseInt(loc[1])},
+                  zoom: 10
+                });
+                handleLocationError(true, map.getCenter());
             });
-            handleLocationError(true, map.getCenter());*/
           });
         } else {
-          map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: -34.397, lng: 150.644},
-              zoom: 6
+          Service.getCurrentLocation().success(function(result) {
+                var loc = result.loc.split(",");
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: parseInt(loc[0]), lng: parseInt(loc[1])},
+                  zoom: 10
+                });
+                handleLocationError(false, map.getCenter());
           });
-          handleLocationError(false, map.getCenter());
         }
     };
 
     function handleLocationError(browserHasGeolocation, pos) {
-        if(!pos){
-          pos = {lat: -34.397, lng: 150.644};
-        }
         var infoWindow = new google.maps.InfoWindow;
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed. Please check your geolocation service' :
                               'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
+        $scope.clicked = false;
+        $scope.loading = false;
+        $scope.closeNav();
+        self.toggleActivation();
     }
     
 
@@ -231,26 +217,48 @@ angular.module('app.controllers', ['ngMaterial']).
         self.toggleActivation();
       }
 
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var myLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        };
-      
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: myLocation,
-          zoom: $scope.zoom
+      if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var myLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+          };
+        
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: myLocation,
+            zoom: $scope.zoom
+          });
+
+          var service = new google.maps.places.PlacesService(map);
+          var request = {
+            location: myLocation,
+            radius: $scope.radius,
+            query: keywords
+          };
+
+          service.textSearch(request, callback);
+        }, function(error) {
+            console.log(error);
+            Service.getCurrentLocation().success(function(result) {
+                var loc = result.loc.split(",");
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: parseInt(loc[0]), lng: parseInt(loc[1])},
+                  zoom: 10
+                });
+                handleLocationError(true, map.getCenter());
+            });
         });
-
-        var service = new google.maps.places.PlacesService(map);
-        var request = {
-          location: myLocation,
-          radius: $scope.radius,
-          query: keywords
-        };
-
-        service.textSearch(request, callback);
-      });
+      } else {
+          Service.getCurrentLocation().success(function(result) {
+                var loc = result.loc.split(",");
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: parseInt(loc[0]), lng: parseInt(loc[1])},
+                  zoom: 10
+                });
+                handleLocationError(false, map.getCenter());
+          });
+      }
     };
 
     $scope.getLocation('hospital');
