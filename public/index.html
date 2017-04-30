@@ -181,13 +181,7 @@
       </div> 
 
       <div class="slide">
-        <span class="md-body-1">Radius Location Searching</span>
-        <md-slider-container class="slider">
-          <span class="md-body-1"></span>
-          <md-slider flex ng-model="radius" min="0" max="2000" aria-label="blue" id="blue-slider" class="md-primary">
-          </md-slider>
-          {{radius}}
-        </md-slider-container>
+        <md-button class="md-primary md-raised" style="z-index:2;" ng-click="openCreditPopUp()">Credit</md-button>
       </div>
     </div>
   </div>
@@ -232,6 +226,27 @@
 
   <md-progress-linear md-mode="indeterminate" ng-show="loading == true"></md-progress-linear>
   <div id="map" style="width:75%;height:100%;float: left;margin-left:10px;"></div>
+
+  <md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column" id="popup" style="position:fixed;z-index:2;top:0;">
+    <md-card>
+      <img ng-src="https://doyok.herokuapp.com/image/IBM-Watson-logo.png" alt="Washed Out">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Credits</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <p>
+            This App is powered By IBM Watson
+          </p>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="closeCreditPopUp()">Close</md-button>
+        </md-card-actions>
+    </md-card>
+    </div>
+  </md-content>
 
   <div id="watson" class="child" class="md-primary md-raised">
     <div class="chat">

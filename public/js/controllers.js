@@ -43,7 +43,7 @@ angular.module('app.controllers', ['ngMaterial']).
 
 
     //---------- INITIAL VALUE ---------------------
-
+    document.getElementById("popup").style.visibility = "hidden";
     $scope.loading = false;
     $scope.indeterminate = false;
     $scope.radius = 500;
@@ -100,6 +100,14 @@ angular.module('app.controllers', ['ngMaterial']).
     $scope.closeNav = function() {
       document.getElementById("mySidenav").style.width = "0";
     }
+
+    $scope.openCreditPopUp = function(){
+      document.getElementById("popup").style.visibility = "visible";
+    };
+
+    $scope.closeCreditPopUp = function(){
+      document.getElementById("popup").style.visibility = "hidden";
+    };
 
     var map;
 
