@@ -80,8 +80,18 @@ angular.module('app.controllers', ['ngMaterial']).
        }
     };
 
-    console.log(window.mobilecheck());
+    var firstVisit = true;
+
     //-------------------------------------------------------------------------------------------
+
+    if(window.mobilecheck()){
+
+      $mdToast.show({
+        hideDelay   : 3000,
+        position    : 'buttom left',
+        templateUrl : 'mobile.html'
+      });
+    } 
 
     $(window).resize(function(){
         if(window.innerWidth <= 800 && window.innerHeight <= 600) {
@@ -364,7 +374,7 @@ angular.module('app.controllers', ['ngMaterial']).
       });
     }
 
-    function addMarker(place) {
+    function addMarker(place, isOpenInfoWindow) {
         var marker = new google.maps.Marker({
           map: map,
           title: place.name,
@@ -375,6 +385,61 @@ angular.module('app.controllers', ['ngMaterial']).
             scaledSize: new google.maps.Size(45, 67)
           }
         });
+
+      if(firstVisit){
+        $mdToast.show({
+          hideDelay   : 10000,
+          position    : 'buttom right',
+          templateUrl : 'markerClick.html'
+        });
+
+        $mdToast.show({
+          hideDelay   : 10000,
+          position    : 'buttom left',
+          templateUrl : 'watson.html'
+        });
+      }
+      if(isOpenInfoWindow && firstVisit){
+        var service = new google.maps.places.PlacesService(map);
+        service.getDetails(place, function(result, status) {
+          if (status !== google.maps.places.PlacesServiceStatus.OK) {
+            return;
+          }
+
+          var end = {
+            lat: result.geometry.location.lat(),
+            lng: result.geometry.location.lng()
+          };
+          $scope.end = end;
+
+          var contentString = '<CENTER><div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">'+result.name+'</h1><BR>'+
+            '<div id="bodyContent">';
+
+          if(result.formatted_address != undefined) contentString += '<p>'+result.formatted_address+'</p>'+'<br>';
+
+          if(result.formatted_phone_number != undefined) contentString += '<p>'+result.formatted_phone_number+'</p>';
+
+          if(result.rating != undefined) contentString += '<p> Rating '+result.rating+'</p>';
+
+          if(result.url != undefined) contentString += '<a href="'+result.url+'"><button class="md-primary md-raised md-button md-ink-ripple" type="button" ">See On Gmap</button></a>';
+
+          contentString += '<button class="md-primary md-raised md-button md-ink-ripple" type="button" ng-click="getDirection();">Get Direction</button>'+'<br>'+
+            '</div>'+
+            '</div></CENTER>';
+
+          var elTooltip = $compile(contentString)($scope);
+          var infowindow = new google.maps.InfoWindow({
+            content: elTooltip[0]
+          });
+
+          infowindow.open(map, marker);
+          firstVisit =  false;
+
+        });
+      }
       google.maps.event.addListener(marker, 'click', function() {
         $scope.clicked = true;
         $scope.loading = true;
@@ -433,7 +498,12 @@ angular.module('app.controllers', ['ngMaterial']).
              || place.types[j] == "insurance_agency" || place.types[j] == "dentist" || place.types[j] == "doctor"
              || place.types[j] == "spa"
             ){
-            addMarker(place);    
+            if(i >= length-1){
+              addMarker(place, true);  
+            } else {
+              addMarker(place, false);  
+            }
+            break; 
           }
         }
         bounds.extend(place.geometry.location);
